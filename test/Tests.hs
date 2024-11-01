@@ -35,10 +35,11 @@ evalTests = [ eval (Val 7)  [("x",380)] ~~> 7.0
             , eval e4 [("x",0.37)] ~~> (-0.9323273456060345)
             , eval e5 [("x",0.37)] ~~> 0.6433720724587564
             , eval e6 [("x",0.37)] ~~> 0.8799171617597958
+            , eval (Mul (Val 7) (Val 5)) [("x",123)] ~~> 35.0 -- 5*7 = 35
             ]
 
 diffTests :: [Assertion]
-diffTests = [ diff e1 "x" --> Add (Mul (Val 5.0) (Val 1.0))
+diffTests = [ diff e1 "x" --> Add (Mul (Val 5.0) (Val 1.0))                       --these all wouldn't work I don't know why
                                   (Mul (Val 0.0) (Id "x"))
             , diff e2 "x" --> Add (Add (Add (Mul (Id "x") (Val 1.0))
                                             (Mul (Val 1.0) (Id "x")))
@@ -72,6 +73,7 @@ maclaurinTests = [ maclaurin (Sin (Id "x")) 2 2 ~~> 2.0
                  , maclaurin (Sin (Id "x")) 2 7 ~~> 0.9333333333333333
                  , maclaurin (Sin (Id "x")) 2 9 ~~> 0.9079365079365079
                  , maclaurin (Cos (Id "x")) 4 9 ~~> -0.39682539682539764
+                 , maclaurin (Sin (Id "x")) 2 0 ~~> 0.0 --0th maclaurin series =0
                  ]
 
 -------------------------------------------------------------------------------
